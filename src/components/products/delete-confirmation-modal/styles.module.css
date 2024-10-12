@@ -1,0 +1,58 @@
+/* styles.module.css */
+
+/* Общий стиль для наложения модального окна */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* Затемнение фона */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Убедитесь, что модальное окно поверх других элементов */
+  }
+  
+  /* Стиль содержимого модального окна */
+  .modalContent {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px; /* Ширина модального окна */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень вокруг модального окна */
+    text-align: center; /* Центрирование текста */
+  }
+  
+  /* Стиль заголовка модального окна */
+  .modalContent h2 {
+    margin: 0 0 15px; /* Отступы заголовка */
+  }
+  
+  /* Стиль для кнопки подтверждения удаления */
+  .confirmButton {
+    background-color: #ff4d4d; /* Красный цвет для удаления */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer; /* Курсор при наведении */
+    margin-right: 10px; /* Отступ между кнопками */
+  }
+  
+  /* Стиль для кнопки отмены */
+  .cancelButton {
+    background-color: #f0f0f0; /* Светлый фон для отмены */
+    color: #333; /* Темный текст */
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer; /* Курсор при наведении */
+  }
+  
+  /* Добавьте эффект наведения для кнопок */
+  .confirmButton:hover,
+  .cancelButton:hover {
+    opacity: 0.8; /* Уменьшение непрозрачности при наведении */
+  }
+  
