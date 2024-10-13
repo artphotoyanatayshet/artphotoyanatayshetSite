@@ -19,7 +19,7 @@ const AdminMenu: React.FC = () => {
       {/* Кнопка бургер-меню */}
       <button
         onClick={toggleMenu}
-        className="fixed z-50 top-20 left-4 bg-gray-700 hover:bg-gray-800 text-white p-3 rounded-lg focus:outline-none"
+        className="fixed z-50 top-24 left-4 bg-gray-700 hover:bg-gray-800 text-white p-3 rounded-lg focus:outline-none"
       >
         {isExpanded ? <AiOutlineClose size={24} /> : "Меню администратора" }
       </button>

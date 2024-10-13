@@ -43,7 +43,7 @@ const BurgerMenu: React.FC = () => {
       {isOpen && (
         <div
           ref={menuRef}
-          className="overflow-y-auto fixed top-0 right-0 w-64 bg-gray-100 shadow-lg rounded-lg z-40 h-full p-4"
+          className="overflow-y-auto fixed top-0 right-0 w-64 bg-gray-500 shadow-lg rounded-lg z-40 h-full p-4"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
@@ -89,7 +89,7 @@ const BurgerMenu: React.FC = () => {
                 <IoLogoWhatsapp size={24} />
                 <span>WhatsApp</span>
               </a>
-              {textBurgerMenu.BurgerMenu.email.title && (
+              {textBurgerMenu.BurgerMenu.email && (
                 <a
                   href={`mailto:${textBurgerMenu.BurgerMenu.email.title}`}
                   className="w-full text-center text-[#00FF00] transition-colors duration-300 hover:text-[#FF00FF] bg-gray-900 rounded-lg p-2 flex justify-center items-center space-x-2"

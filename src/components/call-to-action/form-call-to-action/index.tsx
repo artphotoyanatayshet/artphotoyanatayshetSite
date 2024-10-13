@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import sendToTelegramCallToAction from '../utils/sendToTelegramCallToAction';
 import ModalCallToAction from '../modal-call-to-action';
+import InputMask from 'react-input-mask'; // Импортируем InputMask
 
 interface UserData {
   name: string;
@@ -61,8 +62,8 @@ const CalToActionForm: React.FC<ContactFormProps> = ({ onClose }) => {
           className="block w-full p-2 mb-2 border rounded"
           required
         />
-        <input
-          type="text"
+        <InputMask
+          mask="+7 (999) 999-99-99" // Указываем маску для телефона
           name="phone"
           value={userData.phone}
           placeholder="Ваш телефон"

@@ -7,7 +7,7 @@ import appConfig from '../../app/app-config.json';
 import ModalQuiz from './modal-quiz';
 import { FaPhone, FaTelegramPlane, FaEnvelope } from 'react-icons/fa';
 import CallToActionIcon from '../call-to-action';
-
+import ReactInputMask from 'react-input-mask';
 
 interface QuizProps {
   setShowModalQuiz: (show: boolean) => void;
@@ -15,6 +15,8 @@ interface QuizProps {
 }
 
 const Quiz: React.FC<QuizProps> = ({ setShowModalQuiz, onQuizComplete }) => {
+  const [error, setError] = useState('');
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [userAnswers, setUserAnswers] = useState<{ question: string; answer: string }[]>([]);
@@ -30,23 +32,33 @@ const Quiz: React.FC<QuizProps> = ({ setShowModalQuiz, onQuizComplete }) => {
 
   const handleAnswerSelection = (answer: string) => {
     setSelectedAnswer(answer);
+    // Сбрасываем сообщение об ошибке, если выбран ответ
+    setError('');
   };
 
   const handleNextQuestion = () => {
-    if (selectedAnswer) {
-      setUserAnswers([
-        ...userAnswers,
-        { question: quizData.questions[currentQuestionIndex].question, answer: selectedAnswer },
-      ]);
-      setSelectedAnswer(null);
+    console.log('Next question button clicked'); // Логируем нажатие кнопки
+    if (!selectedAnswer) {
+      setError('Пожалуйста, выберите ответ перед продолжением.');
+      return; // Останавливаем выполнение функции, если ответ не выбран
+    }
 
-      if (currentQuestionIndex + 1 < quizData.questions.length) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-      } else {
-        setIsFinished(true);
-      }
+    // Сбрасываем сообщение об ошибке
+    setError('');
+
+    setUserAnswers([
+      ...userAnswers,
+      { question: quizData.questions[currentQuestionIndex].question, answer: selectedAnswer },
+    ]);
+    setSelectedAnswer(null);
+
+    if (currentQuestionIndex + 1 < quizData.questions.length) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    } else {
+      setIsFinished(true);
     }
   };
+
 
   const handleCloseQuiz = () => {
     setShowModalQuiz(false);
@@ -63,17 +75,28 @@ const Quiz: React.FC<QuizProps> = ({ setShowModalQuiz, onQuizComplete }) => {
   };
 
   const handleSubmit = async () => {
+    const { name, phone, email } = userData;
+
+    // Проверка на наличие необходимых данных
+    if (!name || !phone || !email) {
+      setError('Пожалуйста, заполните ваше ФИО, телефон и email.');
+      return;
+    }
+
+    // Сброс ошибки при успешной проверке
+    setError('');
+
     // Call sendToTelegram with userData and userAnswers
     await sendToTelegram({
       api_token: appConfig.TOKEN_TELEGRAM,
       my_channel_name: appConfig.CHAT_ID_TELEGRAM,
       userData: userData,
       userAnswers: userAnswers,
-      setOpenModalInit: () => {},
-      setPhone: () => {},
-      setName: () => {},
-      setEmail: () => {},
-      onClose: () => {},
+      setOpenModalInit: () => { },
+      setPhone: () => { },
+      setName: () => { },
+      setEmail: () => { },
+      onClose: () => { },
     });
 
     // Set success message and open modal
@@ -91,7 +114,7 @@ const Quiz: React.FC<QuizProps> = ({ setShowModalQuiz, onQuizComplete }) => {
         >
           <FaWindowClose />
         </button>
-<CallToActionIcon />
+        <CallToActionIcon />
         {isFinished ? (
           <div className="text-center">
             <h2 className="text-2xl font-bold mb-4">Спасибо за участие!</h2>
@@ -106,8 +129,9 @@ const Quiz: React.FC<QuizProps> = ({ setShowModalQuiz, onQuizComplete }) => {
                 className="block w-full p-2 mb-2 border rounded"
                 required
               />
-              <input
-                type="text"
+
+              <ReactInputMask
+                mask="+7 (999) 999-99-99" // Указываем маску для телефона
                 name="phone"
                 value={userData.phone}
                 placeholder="Ваш телефон"
@@ -125,48 +149,50 @@ const Quiz: React.FC<QuizProps> = ({ setShowModalQuiz, onQuizComplete }) => {
                 required
               />
 
+              <div className="flex flex-col mb-2">
+                <label className="font-semibold">Предпочтительный способ связи:</label>
+                <div className="flex flex-row items-center space-x-4">
+                  <label className="flex items-center cursor-pointer">
+                    <input
+                      type="radio"
+                      value="phone"
+                      checked={userData.contactMethod === 'phone'}
+                      onChange={handleContactMethodChange}
+                      className="mr-2"
+                    />
+                    <FaPhone className="text-xl mr-1" />
+                    <span>Телефон</span>
+                  </label>
+                  <label className="flex items-center cursor-pointer">
+                    <input
+                      type="radio"
+                      value="telegram"
+                      checked={userData.contactMethod === 'telegram'}
+                      onChange={handleContactMethodChange}
+                      className="mr-2"
+                    />
+                    <FaTelegramPlane className="text-xl mr-1" />
+                    <span>Telegram</span>
+                  </label>
+                  <label className="flex items-center cursor-pointer">
+                    <input
+                      type="radio"
+                      value="email"
+                      checked={userData.contactMethod === 'email'}
+                      onChange={handleContactMethodChange}
+                      className="mr-2"
+                    />
+                    <FaEnvelope className="text-xl mr-1" />
+                    <span>Email</span>
+                  </label>
+                </div>
+              </div>
 
-<div className="flex flex-col mb-2">
-  <label className="font-semibold">Предпочтительный способ связи:</label>
-  <div className="flex flex-row items-center space-x-4">
-    <label className="flex items-center cursor-pointer">
-      <input
-        type="radio"
-        value="phone"
-        checked={userData.contactMethod === 'phone'}
-        onChange={handleContactMethodChange}
-        className="mr-2" // Отступ между радиокнопкой и иконкой
-      />
-      <FaPhone className="text-xl mr-1" /> {/* Иконка телефона */}
-      <span>Телефон</span>
-    </label>
-    <label className="flex items-center cursor-pointer">
-      <input
-        type="radio"
-        value="telegram"
-        checked={userData.contactMethod === 'telegram'}
-        onChange={handleContactMethodChange}
-        className="mr-2" // Отступ между радиокнопкой и иконкой
-      />
-      <FaTelegramPlane className="text-xl mr-1" /> {/* Иконка Telegram */}
-      <span>Telegram</span>
-    </label>
-    <label className="flex items-center cursor-pointer">
-      <input
-        type="radio"
-        value="email"
-        checked={userData.contactMethod === 'email'}
-        onChange={handleContactMethodChange}
-        className="mr-2" // Отступ между радиокнопкой и иконкой
-      />
-      <FaEnvelope className="text-xl mr-1" /> {/* Иконка Email */}
-      <span>Email</span>
-    </label>
-  </div>
-</div>
-
-
-
+              {error && (
+                <div className="text-red-500 mb-4">
+                  {error}
+                </div>
+              )}
             </div>
             <button
               onClick={handleSubmit}
@@ -177,17 +203,17 @@ const Quiz: React.FC<QuizProps> = ({ setShowModalQuiz, onQuizComplete }) => {
           </div>
         ) : (
           <div>
-            <h2 className="text-2xl font-bold mb-4">{quizData.title}</h2>
-            <p>{quizData.subtitle}</p>
+            <h2 className="text-2xl text-gray-500 font-bold mb-4">{quizData.title}</h2>
+            <p className='text-gray-500'>{quizData.subtitle}</p>
             <hr />
-            <h3 className="text-xl font-semibold mb-4">
+            <h3 className="text-gray-500 text-xl font-semibold mb-4">
               {quizData.questions[currentQuestionIndex].question}
             </h3>
             <ul>
               {quizData.questions[currentQuestionIndex].options.map((option) => (
                 <li
                   key={option}
-                  className={`cursor-pointer p-2 border rounded-md mb-2 transition-colors 
+                  className={`text-gray-500 cursor-pointer p-2 border rounded-md mb-2 transition-colors 
                   ${selectedAnswer === option ? 'bg-blue-500 text-white' : 'bg-gray-100 hover:bg-gray-200'}`}
                   onClick={() => handleAnswerSelection(option)}
                 >
@@ -198,10 +224,16 @@ const Quiz: React.FC<QuizProps> = ({ setShowModalQuiz, onQuizComplete }) => {
             <button
               onClick={handleNextQuestion}
               className="mt-4 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
-              disabled={!selectedAnswer}
+
             >
               <TbPlayerTrackNextFilled />
             </button>
+
+            {error && (
+              <div className="text-red-500 mb-4">
+                {error}
+              </div>
+            )}
           </div>
         )}
       </div>

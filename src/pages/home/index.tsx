@@ -9,9 +9,13 @@ import MainQuiz from '../../components/quiz-questions/main-quiz';
 import Faq from '../../components/faq';
 import { useAuth } from '../../app/auth/AuthContext';
 import AdminMenu from '../../app/menu-admin';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import ProductList from '../../components/products/product-list';
 import AddProductToJson from '../../components/products/add-product-to-json';
+import ThemeSwitcher from '../../components/theme-switcher';
+import { getThemeClasses } from '../../components/theme-switcher/themeUtils';
+import appConfig from '../../app/app-config.json';
+
 
 const owner = GITREPOSITORY_OWNER;
 const repo = GITREPO;
@@ -27,6 +31,12 @@ const Home: React.FC = () => {
   const [fileContent, setFileContent] = useState<any>({});
   const [changes, setChanges] = useState<{ [key: string]: string }>({});
   const [error, setError] = useState<string | null>(null);
+
+  const theme = appConfig.defaultTheme;
+
+  if (!theme) return null;
+  const {  textColor } = getThemeClasses(theme);
+
   if (error) { console.log("Error HomePage", error); }
 
   const fetchFile = async () => {
@@ -43,6 +53,25 @@ const Home: React.FC = () => {
   useEffect(() => {
     fetchFile();
   }, []);
+
+  const location = useLocation();
+
+  // Функция для скроллинга к секции по id
+  const scrollToSection = (id: string) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // Прокрутка при загрузке страницы, если есть параметр scrollTo
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const scrollTo = searchParams.get('scrollTo');
+    if (scrollTo) {
+      scrollToSection(scrollTo);
+    }
+  }, [location]);
 
   const openModal = (key: string, text: string) => {
     setCurrentText(text);
@@ -92,15 +121,15 @@ const Home: React.FC = () => {
   return (
     <>
       {isAuthenticated && <AdminMenu />}
-     
+      <ThemeSwitcher />
       <div className="z-10 container mx-auto px-4 sm:px-6 lg:px-8 relative"> {/* relative для родительского элемента */}
   
       <MainQuiz  />
   <section id="home" className="my-2 mt-10" data-aos="fade-right" data-aos-duration="1000" >
     <div className="flex flex-col items-center justify-center px-4">
-      <section className="img-bg md:right-1/4 md:top-[10%]"></section> {/* Убедитесь, что z-index правильно настроен */}
+      <section className="imgBg md:right-1/4 md:top-[10%]"></section> {/* Убедитесь, что z-index правильно настроен */}
       <div className="flex items-center"> {/* Убедитесь, что z-index выше у других элементов */}
-        <h1 className="font-syne font-bold text-2xl sm:text-4xl text-white text-center">
+        <h1 className={`font-syne font-bold text-2xl sm:text-4xl ${textColor} text-center`}>
           {changes['home.title'] || fileContent.home?.title || textJsonRu.home.title}
         </h1>
         {isAuthenticated && (
@@ -121,10 +150,10 @@ const Home: React.FC = () => {
         </section>
 
         <section id="about" className="flex md:flex-row flex-col-reverse justify-between gap-10">
-          <section className="hidden md:block img-bg left-4 mt-14"></section>
+          <section className="hidden md:block imgBg left-4 mt-14"></section>
           <div className="md:w-2/3 m-auto" data-aos="fade-left" data-aos-duration="1000">
             <div className="flex items-center">
-              <h2 className="text-3xl font-syne font-bold text-white">
+              <h2 className={`text-3xl font-syne font-bold ${textColor}`}>
                 {changes['about.title'] || fileContent.about?.title || textJsonRu.about.title}
               </h2>
               {isAuthenticated && (
@@ -162,12 +191,12 @@ const Home: React.FC = () => {
         </section>
 
         <section id="testimonials" className="flex flex-row flex-col-reverse gap-10 mb-16" data-aos="zoom-in">
-          <section className="hidden md:block img-bg left-4 mt-4"></section>
+          <section className="hidden md:block imgBg left-4 mt-4"></section>
           <div className="">
             <div className="flex justify-between">
-              <h2 className="font-syne text-4xl text-white font-bold">
+              <h3 className={`font-syne text-4xl ${textColor}  font-bold`}>
                 {changes['testimonial.title'] || fileContent.testimonial?.title || textJsonRu.testimonial.title}
-              </h2>
+              </h3>
               <img className="md:h-20 h-[28px] w-20 object-contain" src="/quote.svg" alt="" />
             </div>
             {isAuthenticated && (
@@ -182,17 +211,17 @@ const Home: React.FC = () => {
                 <FaEdit onClick={() => openModal('testimonial.description', changes['testimonial.description'] || fileContent.testimonial?.description || textJsonRu.testimonial.description)} className="ml-2 text-white cursor-pointer" />
               )}
 
-              <h2 className="font-syne text-md text-white font-bold mt-6">
+              <p className={`font-syne text-md ${textColor}  font-bold mt-6`}>
                 {changes['testimonial.subtitle_testimonial'] || fileContent.testimonial?.subtitle_testimonial || textJsonRu.testimonial.subtitle_testimonial}
                 {isAuthenticated && (
                   <FaEdit onClick={() => openModal('testimonial.subtitle_testimonial', changes['testimonial.subtitle_testimonial'] || fileContent.testimonial?.subtitle_testimonial || textJsonRu.testimonial.subtitle_testimonial)} className="ml-2 text-white cursor-pointer" />
                 )}
-              </h2>
+              </p>
             </div>
           </div>
         </section>
 
-<section>
+<section id="servises_id">
   {isAuthenticated && <AddProductToJson /> }
   <ProductList />
 </section>
@@ -203,7 +232,7 @@ const Home: React.FC = () => {
 
         {/* Кнопка для публикации изменений */}
         {isAuthenticated && (
-          <button onClick={publishChanges} className="fixed top-10 right-20 p-3 rounded-lg bg-green-500 text-white mt-4">
+          <button onClick={publishChanges} className="z-50 fixed top-16 right-20 p-3 rounded-lg bg-green-500 text-white mt-4">
             {isLoading ? "Обновление" : "Опубликовать изменения"}
           </button>
         )}
