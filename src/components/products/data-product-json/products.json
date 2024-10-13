@@ -30,16 +30,6 @@
     "is_delivery": false
   },
   {
-    "id": 10,
-    "img_url": "blob:http://localhost:5173/b30f5293-42ae-4ab9-ac1a-3064eb7246b3",
-    "title": "Продукт2",
-    "description": "цйу",
-    "price": "20",
-    "discount": 0,
-    "is_active": false,
-    "is_delivery": false
-  },
-  {
     "id": 11,
     "img_url": "images-product/product-11.png",
     "title": "Продукт2",
