@@ -179,7 +179,7 @@ const Home: React.FC = () => {
           </div>
           <div data-aos="fade-left" data-aos-duration="1000" className="relative z-0">
   <img
-    className="w-full h-full object-contain rounded-lg grayscale"
+    className="w-full h-full object-contain rounded-lg "
     src="/profile.png"
     alt="profile"
     style={{ zIndex: -1 }} // Устанавливаем z-index для изображения
