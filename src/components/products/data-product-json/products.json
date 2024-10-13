@@ -30,16 +30,6 @@
     "is_delivery": false
   },
   {
-    "id": 7,
-    "img_url": "images-product/product-7.png",
-    "title": "Продукт2",
-    "description": "erew",
-    "price": "660",
-    "discount": "50",
-    "is_active": false,
-    "is_delivery": false
-  },
-  {
     "id": 8,
     "img_url": "blob:http://localhost:5173/94207dbd-b1f6-4d4e-8a70-bf4d1074404f",
     "title": "Продукт2",
