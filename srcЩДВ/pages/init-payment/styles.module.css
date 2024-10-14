@@ -1,0 +1,106 @@
+/* styles.module.css */
+
+.container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card {
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .textBase {
+    font-size: 1.75rem;
+    color: #4c51bf;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  .textRed500 {
+    color: #e53e3e;
+  }
+  
+  .productInfo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .productImage {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    margin-right: 1rem;
+    border: 1px solid #e2e8f0;
+  }
+  
+  .imagePlaceholder {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #edf2f7;
+    color: #a0aec0;
+    font-size: 0.875rem;
+    border-radius: 0.5rem;
+    margin-right: 1rem;
+    border: 1px solid #e2e8f0;
+  }
+  
+  .productDetails h3 {
+    font-size: 1.25rem;
+    color: #2d3748;
+  }
+  
+  .originalPrice {
+    font-size: 1rem;
+    color: #718096;
+    text-decoration: line-through;
+    margin-right: 0.5rem;
+  }
+  
+  .discountedPrice {
+    font-size: 1.25rem;
+    color: #e53e3e;
+    font-weight: bold;
+  }
+  
+  .price {
+    font-size: 1.25rem;
+    color: #2d3748;
+  }
+  
+  .inputField {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    color: #2d3748;
+  }
+  
+  .payButton {
+    background-color: #4c51bf;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .payButton:hover {
+    background-color: #434190;
+  }
+  

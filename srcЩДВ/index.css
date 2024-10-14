@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&family=Syne:wght@400;500;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* theme1 (Темная тема) */
+.theme1 body {
+  background: theme('colors.theme1.background');
+  color: theme('colors.theme1.text');
+}
+
+/* theme2 (Светлая тема) */
+.theme2 body {
+  background: theme('colors.theme2.background');
+  color: theme('colors.theme2.text');
+}
+
+/* theme3 */
+.theme3 body {
+  background: theme('colors.theme3.background');
+  color: theme('colors.theme3.text');
+}
+
+/* theme4 */
+.theme4 body {
+  background: theme('colors.theme4.background');
+  color: theme('colors.theme4.text');
+}
+
+/* theme5 */
+.theme5 body {
+  background: theme('colors.theme5.background');
+  color: theme('colors.theme5.text');
+}
+
+/* Для остальных элементов */
+.theme1 .imgBg, .theme2 .imgBg, .theme3 .imgBg, .theme4 .imgBg, .theme5 .imgBg {
+  filter: blur(72px);
+  border-radius: 40%;
+  position: absolute;
+  z-index: -1;
+}
+
+.imgBg {
+  height: 80px;
+  width: 120px;
+  z-index: 1;
+
+}
+
+.imgBg {
+  position: absolute;
+  background-color: white;
+  border-radius: 40%;
+  filter: blur(72px);
+  z-index: -1;
+  animation: pulse 4s cubic-bezier(0, 0, 0, 0.5) infinite;
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(1.5);
+  }
+}

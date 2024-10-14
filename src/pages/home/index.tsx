@@ -35,7 +35,7 @@ const Home: React.FC = () => {
   const theme = appConfig.defaultTheme;
 
   if (!theme) return null;
-  const {  textColor } = getThemeClasses(theme);
+  const {  textColor, anyTextColor } = getThemeClasses(theme);
 
   if (error) { console.log("Error HomePage", error); }
 
@@ -130,7 +130,7 @@ const Home: React.FC = () => {
       <section className="imgBg md:right-1/4 md:top-[10%]"></section> {/* Убедитесь, что z-index правильно настроен */}
       <div className="flex items-center"> {/* Убедитесь, что z-index выше у других элементов */}
         <h1 className={`font-syne font-bold text-2xl sm:text-4xl ${textColor} text-center`}>
-          {changes['home.title'] || fileContent.home?.title || textJsonRu.home.title}
+          {changes['home.title'] || textJsonRu.home.title}
         </h1>
         {isAuthenticated && (
           <FaEdit onClick={() => openModal('home.title', changes['home.title'] || fileContent.home?.title || textJsonRu.home.title)} className="ml-2 text-white cursor-pointer" />
@@ -139,7 +139,7 @@ const Home: React.FC = () => {
           <Link to='/call-to-action'>
             <button className="bg-primary w-48 h-10 p-2  rounded-full flex flex-row items-center justify-center mt-12">
               <span className="font-bold font-rubik text-xs text-gray-100">
-                {changes['home.button_title_home'] || fileContent.home?.button_title_home || textJsonRu.home.button_title_home}
+                {changes['home.button_title_home'] || textJsonRu.home.button_title_home}
               </span>
             </button>
           </Link>
@@ -154,14 +154,14 @@ const Home: React.FC = () => {
           <div className="md:w-2/3 m-auto" data-aos="fade-left" data-aos-duration="1000">
             <div className="flex items-center">
               <h2 className={`text-3xl font-syne font-bold ${textColor}`}>
-                {changes['about.title'] || fileContent.about?.title || textJsonRu.about.title}
+                {changes['about.title'] || textJsonRu.about.title}
               </h2>
               {isAuthenticated && (
                 <FaEdit onClick={() => openModal('about.title', changes['about.title'] || fileContent.about?.title || textJsonRu.about.title)} className="ml-2 text-white cursor-pointer" />
               )}
             </div>
-            <p className="text-zinc-500 font-rubik font-thin text-sm w-full mt-6">
-              {changes['about.description'] || fileContent.about?.description || textJsonRu.about.description_home_section}
+            <p className={`${anyTextColor} font-rubik font-thin text-sm w-full mt-6`}>
+              {changes['about.description'] || textJsonRu.about.description_home_section}
             </p>
             {isAuthenticated && (
               <FaEdit onClick={() => openModal('about.description', changes['about.description'] || fileContent.about?.description || textJsonRu.about.description_home_section)} className="ml-2 text-white cursor-pointer" />
@@ -169,7 +169,7 @@ const Home: React.FC = () => {
             <Link to='/call-to-action'>
               <button className="bg-primary w-48 h-10 rounded-full flex flex-row items-center justify-center mt-12">
                 <span className="font-bold font-rubik text-xs text-gray-100">
-                  {changes['about.button_title_about'] || fileContent.about?.button_title_about || textJsonRu.about.button_title_about_home_section}
+                  {changes['about.button_title_about'] || textJsonRu.about.button_title_about_home_section}
                 </span>
               </button>
             </Link>
@@ -179,7 +179,7 @@ const Home: React.FC = () => {
           </div>
           <div data-aos="fade-left" data-aos-duration="1000" className="relative z-0">
   <img
-    className="w-full h-full object-contain rounded-lg "
+    className="w-full h-full object-contain rounded-lg"
     src="/profile.png"
     alt="profile"
     style={{ zIndex: -1 }} // Устанавливаем z-index для изображения
@@ -195,7 +195,7 @@ const Home: React.FC = () => {
           <div className="">
             <div className="flex justify-between">
               <h3 className={`font-syne text-4xl ${textColor}  font-bold`}>
-                {changes['testimonial.title'] || fileContent.testimonial?.title || textJsonRu.testimonial.title}
+                {changes['testimonial.title'] || textJsonRu.testimonial.title}
               </h3>
               <img className="md:h-20 h-[28px] w-20 object-contain" src="/quote.svg" alt="" />
             </div>
@@ -204,15 +204,15 @@ const Home: React.FC = () => {
             )}
 
             <div className="mt-2 pr-20">
-              <p className="text-xs font-rubik font-thin text-left text-slate-500">
-                {changes['testimonial.description'] || fileContent.testimonial?.description || textJsonRu.testimonial.description}
+              <p className={` ${anyTextColor} text-xs font-rubik font-thin text-left text-slate-500`}>
+                {changes['testimonial.description'] || textJsonRu.testimonial.description}
               </p>
               {isAuthenticated && (
                 <FaEdit onClick={() => openModal('testimonial.description', changes['testimonial.description'] || fileContent.testimonial?.description || textJsonRu.testimonial.description)} className="ml-2 text-white cursor-pointer" />
               )}
 
               <p className={`font-syne text-md ${textColor}  font-bold mt-6`}>
-                {changes['testimonial.subtitle_testimonial'] || fileContent.testimonial?.subtitle_testimonial || textJsonRu.testimonial.subtitle_testimonial}
+                {changes['testimonial.subtitle_testimonial'] || textJsonRu.testimonial.subtitle_testimonial}
                 {isAuthenticated && (
                   <FaEdit onClick={() => openModal('testimonial.subtitle_testimonial', changes['testimonial.subtitle_testimonial'] || fileContent.testimonial?.subtitle_testimonial || textJsonRu.testimonial.subtitle_testimonial)} className="ml-2 text-white cursor-pointer" />
                 )}

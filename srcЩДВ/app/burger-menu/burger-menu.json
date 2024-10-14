@@ -1,0 +1,55 @@
+{
+  "BurgerMenu": {
+    "main_burger": {
+      "title": "Интернет-Магазин"
+    },
+    "main_burger_subtitle": {
+      "title": "Без ежегодных и ежемесячных платежей"
+    },
+    "main": {
+      "title": "Главная",
+      "is_active": true,
+      "link": "/"
+    },
+    "about": {
+      "title": "О нас",
+      "is_active": true,
+      "link": "/about"
+    },
+    "offer_agreement": {
+      "title": "Соглашение оферта",
+      "is_active": true,
+      "link": "/offer-agreement"
+    },
+    "privacy_policy": {
+      "title": "Политика конфиденциальности",
+      "is_active": true,
+      "link": "privacy-policy"
+    },
+    "user_agreement": {
+      "title": "Пользовательское соглашение",
+      "is_active": true,
+      "link": "user-agreement"
+    },
+    "delivery_rules": {
+      "title": "Правила доставки",
+      "is_active": true,
+      "link": "delivery-rules"
+    },
+    "phone": {
+      "title": "+79149272111"
+    },
+    "telegram_number": {
+      "title": "+79149272111"
+    },
+    "whatsapp_number": {
+      "title": "+79149272111"
+    },
+    "email": {
+      "title": ""
+    },
+    "login": {
+      "title": "Войти"
+    }
+  }
+}

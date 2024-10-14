@@ -3,6 +3,9 @@ import styles from './styles.module.css';
 import { Link } from 'react-router-dom';
 import { TbLampOff, TbTruckDelivery } from 'react-icons/tb';
 import { useAuth } from '../../../app/auth/AuthContext';
+import { getThemeClasses } from '../../theme-switcher/themeUtils';
+import appConfig from '../../../app/app-config.json';
+
 
 interface ProductCardProps {
   product: {
@@ -25,10 +28,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onMoreDetails, onEdi
   const discountedPrice = price - (price * discount) / 100;
 
   const { isAuthenticated } = useAuth();
+  const theme = appConfig.defaultTheme;
 
+  if (!theme) return null;
+  const {  bgCard } = getThemeClasses(theme);
 
   return (
-    <div className={styles.productCard}>
+    <div className={` ${bgCard} ${styles.productCard}`}>
       {img_url && (
         <img
           src={img_url}

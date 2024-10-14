@@ -1,0 +1,55 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1rem;
+    /* background-color: #0b0c0c; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 15;
+}
+
+.logoContainer {
+    display: flex;
+    align-items: center;
+}
+
+.navLinks {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Центрируем список */
+    width: 100%; /* Ширина списка, чтобы он мог быть центрирован */
+    position: absolute; /* Абсолютное позиционирование для центрирования */
+    left: 0;
+    right: 0;
+}
+
+.navLinks li {
+    margin-left: 1.5rem;
+}
+
+.link {
+    /* color: white; */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.link:hover {
+    color: #9ca3af;
+}
+
+/* Отступ сверху для контента, чтобы он не перекрывался навигацией */
+body {
+    padding-top: 4rem;
+}
+
+/* Мобильная версия — скрываем все элементы меню, кроме логотипа */
+@media (max-width: 640px) {
+    .navLinks {
+        display: none;
+    }
+}

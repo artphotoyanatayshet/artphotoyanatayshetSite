@@ -24,7 +24,7 @@ const EditProductToJson: React.FC<EditProductToJsonProps> = ({ productToEdit, on
   const [newProduct, setNewProduct] = useState<Product | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
-  //@ts-ignore
+
   const [loading, setLoading] = useState<boolean>(false);
   const [isFetching, setIsFetching] = useState<boolean>(true);
   const [selectedFileForCard, setSelectedFileForCard] = useState<File | null>(null);
@@ -75,10 +75,10 @@ const EditProductToJson: React.FC<EditProductToJsonProps> = ({ productToEdit, on
     if (selectedFileForCard && newProduct) {
       setLoading(true);
       const newFileName = `product-${newProduct.id}.png`; // Изменено на .png
-      const newFilePath = `images-product/${newFileName}`; // Путь к файлу с новым именем
+      const newFilePath = `public/images-product/${newFileName}`; // Путь к файлу с новым именем
 
       try {
-        await handleFileUploadForCard(selectedFileForCard, newFilePath);
+         handleFileUploadForCard(selectedFileForCard, newFilePath);
         setUploadMessageImage(`Файл ${newFileName} успешно загружен!`);
         setSelectedFileForCard(null);
 
@@ -242,7 +242,7 @@ const EditProductToJson: React.FC<EditProductToJsonProps> = ({ productToEdit, on
               Доставка
             </label>
             <button onClick={updateProduct} className="bg-green-500 text-white rounded-lg p-2 w-full">
-              Обновить продукт
+              {loading ? "Обновление":"Обновить продукт"}
             </button>
             {uploadMessageForCard && (
               <p style={{ color: 'green' }}>{uploadMessageForCard}</p>

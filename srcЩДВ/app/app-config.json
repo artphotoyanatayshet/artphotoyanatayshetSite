@@ -1,0 +1,10 @@
+{
+  "password_admin": "password1",
+  "email_admin": "admin@andlaw.ru",
+  "TOKEN_TELEGRAM": "6985872588:AAEDsBILdqiXGF3YhaSZZ_qjmIS7foCB2p4",
+  "CHAT_ID_TELEGRAM": "-1001910712578",
+  "TINKOFF_EMAIL_COMPANY": "83952280298@mail.ru",
+  "TINKOFF_TAXION_COMPANY": "usn_income_outcome",
+  "TINKOFF_TERMINAL_KEY": "1717053785399",
+  "defaultTheme": "theme2"
+}
