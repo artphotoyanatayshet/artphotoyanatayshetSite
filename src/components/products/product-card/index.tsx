@@ -33,6 +33,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onMoreDetails, onEdi
   if (!theme) return null;
   const {  bgCard } = getThemeClasses(theme);
 
+console.log(img_url)
+
   return (
     <div className={` ${bgCard} ${styles.productCard}`}>
       {img_url && (

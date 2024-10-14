@@ -39,7 +39,8 @@ const AddProductToJson: React.FC = () => {
   const owner = GITREPOSITORY_OWNER;
   const repo = GITREPO;
   const jsonFilePath = 'src/components/products/data-product-json/products.json';
-  const imageUploadPath = 'public/images-product/';
+  const imageUploadPathPublic = 'public/images-product';
+  const imagePathToJsonFile = 'images-product';
 
   // Загрузка продуктов из JSON
   const loadProducts = useCallback(async () => {
@@ -102,10 +103,10 @@ const AddProductToJson: React.FC = () => {
     }
 
     const imageName = dataSaveProductGit.imgNameSaveGit;
-    const imagePath = `${imageUploadPath}${imageName}`;
+    const imagePathToJson = `${imageUploadPathPublic}${imageName}`;
 
     // Проверка существования файла
-    const fileExists = await checkIfFileExists(imagePath);
+    const fileExists = await checkIfFileExists(imagePathToJson);
     if (fileExists) {
       setError('Изображение с таким именем уже существует.');
       return;
@@ -120,10 +121,10 @@ const AddProductToJson: React.FC = () => {
         content: base64Image,
       };
 
-      await updateFileContent(owner, repo, imagePath, payload);
+      await updateFileContent(owner, repo, `${imageUploadPathPublic}/${imageName}`, payload);
       setUploadMessage('Изображение успешно загружено!');
-      setNewProduct((prev) => ({ ...prev, img_url: imagePath }));
-      setImageUrl(imagePath);
+      setNewProduct((prev) => ({ ...prev, img_url: `${imagePathToJsonFile}/${imageName}` }));
+      setImageUrl(imageUploadPathPublic);
     } catch (err) {
       console.error('Ошибка загрузки изображения:', err);
       setError('Ошибка загрузки изображения.');
@@ -133,44 +134,52 @@ const AddProductToJson: React.FC = () => {
   }, [selectedFile, owner, repo, products]);
 
   // Добавление нового продукта
-  const addProduct = useCallback(async () => {
-    if (!newProduct.title ) {
-      setError('Заполните обязательные поля.');
-      return;
-    }
+ // Добавление нового продукта
+const addProduct = useCallback(async () => {
+  if (!newProduct.title) {
+    setError('Заполните обязательные поля.');
+    return;
+  }
 
-    if (!fileSha) {
-      setError('Не удалось получить SHA файла.');
-      return;
-    }
+  // Проверка наличия изображения
+  if (!newProduct.img_url) {
+    setError('Загрузите изображение продукта.');
+    return;
+  }
 
-    setLoading(true);
-    const newId = products.length ? products[products.length - 1].id + 1 : 1;
-    const updatedProduct = { ...newProduct, id: newId };
-    const updatedProducts = [...products, updatedProduct];
+  if (!fileSha) {
+    setError('Не удалось получить SHA файла.');
+    return;
+  }
 
-    const jsonString = JSON.stringify(updatedProducts, null, 2);
-    const encodedContent = btoa(unescape(encodeURIComponent(jsonString)));
+  setLoading(true);
+  const newId = products.length ? products[products.length - 1].id + 1 : 1;
+  const updatedProduct = { ...newProduct, id: newId };
+  const updatedProducts = [...products, updatedProduct];
 
-    try {
-      const payload = {
-        message: `Добавлен продукт: ${newProduct.title}`,
-        content: encodedContent,
-        sha: fileSha, // Включение SHA в запрос
-      };
+  const jsonString = JSON.stringify(updatedProducts, null, 2);
+  const encodedContent = btoa(unescape(encodeURIComponent(jsonString)));
 
-      await updateFileContent(owner, repo, jsonFilePath, payload);
-      setUploadMessage('Продукт успешно добавлен!');
-      resetNewProduct();
-      loadProducts();
-      setIsModalOpen(false);
-    } catch (err) {
-      console.error('Ошибка сохранения продукта:', err);
-      setError('Ошибка сохранения продукта.');
-    } finally {
-      setLoading(false);
-    }
-  }, [newProduct, products, owner, repo, jsonFilePath, fileSha, loadProducts]);
+  try {
+    const payload = {
+      message: `Добавлен продукт: ${newProduct.title}`,
+      content: encodedContent,
+      sha: fileSha, // Включение SHA в запрос
+    };
+
+    await updateFileContent(owner, repo, jsonFilePath, payload);
+    setUploadMessage('Продукт успешно добавлен!');
+    resetNewProduct();
+    loadProducts();
+    setIsModalOpen(false);
+  } catch (err) {
+    console.error('Ошибка сохранения продукта:', err);
+    setError('Ошибка сохранения продукта.');
+  } finally {
+    setLoading(false);
+  }
+}, [newProduct, products, owner, repo, jsonFilePath, fileSha, loadProducts]);
+
 
   // Сброс состояния формы
   const resetNewProduct = () => {

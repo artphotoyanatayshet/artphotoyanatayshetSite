@@ -133,7 +133,7 @@ const Home: React.FC = () => {
           {changes['home.title'] || textJsonRu.home.title}
         </h1>
         {isAuthenticated && (
-          <FaEdit onClick={() => openModal('home.title', changes['home.title'] || fileContent.home?.title || textJsonRu.home.title)} className="ml-2 text-white cursor-pointer" />
+          <FaEdit color={`green`} onClick={() => openModal('home.title', changes['home.title'] || fileContent.home?.title || textJsonRu.home.title)} className="ml-2 text-white cursor-pointer" />
         )}
       </div>
           <Link to='/call-to-action'>
@@ -144,7 +144,7 @@ const Home: React.FC = () => {
             </button>
           </Link>
             {isAuthenticated && (
-              <FaEdit onClick={() => openModal('home.button_title_home', changes['home.button_title_home'] || fileContent.home?.button_title_home || textJsonRu.home.button_title_home)} className="ml-2 text-white cursor-pointer" />
+              <FaEdit color={`green`} onClick={() => openModal('home.button_title_home', changes['home.button_title_home'] || fileContent.home?.button_title_home || textJsonRu.home.button_title_home)} className="ml-2 text-white cursor-pointer" />
             )}
           </div>
         </section>
@@ -157,14 +157,14 @@ const Home: React.FC = () => {
                 {changes['about.title'] || textJsonRu.about.title}
               </h2>
               {isAuthenticated && (
-                <FaEdit onClick={() => openModal('about.title', changes['about.title'] || fileContent.about?.title || textJsonRu.about.title)} className="ml-2 text-white cursor-pointer" />
+                <FaEdit color={`green`} onClick={() => openModal('about.title', changes['about.title'] || fileContent.about?.title || textJsonRu.about.title)} className="ml-2 text-white cursor-pointer" />
               )}
             </div>
             <p className={`${anyTextColor} font-rubik font-thin text-sm w-full mt-6`}>
               {changes['about.description'] || textJsonRu.about.description_home_section}
             </p>
             {isAuthenticated && (
-              <FaEdit onClick={() => openModal('about.description', changes['about.description'] || fileContent.about?.description || textJsonRu.about.description_home_section)} className="ml-2 text-white cursor-pointer" />
+              <FaEdit color={`green`} onClick={() => openModal('about.description', changes['about.description'] || fileContent.about?.description || textJsonRu.about.description_home_section)} className="ml-2 text-white cursor-pointer" />
             )}
             <Link to='/call-to-action'>
               <button className="bg-primary w-48 h-10 rounded-full flex flex-row items-center justify-center mt-12">
@@ -174,7 +174,7 @@ const Home: React.FC = () => {
               </button>
             </Link>
             {isAuthenticated && (
-              <FaEdit onClick={() => openModal('about.button_title_about', changes['about.button_title_about'] || fileContent.about?.button_title_about || textJsonRu.about.button_title_about_home_section)} className="ml-2 text-white cursor-pointer" />
+              <FaEdit color={`green`} onClick={() => openModal('about.button_title_about', changes['about.button_title_about'] || fileContent.about?.button_title_about || textJsonRu.about.button_title_about_home_section)} className="ml-2 text-white cursor-pointer" />
             )}
           </div>
           <div data-aos="fade-left" data-aos-duration="1000" className="relative z-0">
@@ -200,7 +200,7 @@ const Home: React.FC = () => {
               <img className="md:h-20 h-[28px] w-20 object-contain" src="/quote.svg" alt="" />
             </div>
             {isAuthenticated && (
-              <FaEdit onClick={() => openModal('testimonial.title', changes['testimonial.title'] || fileContent.testimonial?.title || textJsonRu.testimonial.title)} className="ml-2 text-white cursor-pointer" />
+              <FaEdit color={`green`} onClick={() => openModal('testimonial.title', changes['testimonial.title'] || fileContent.testimonial?.title || textJsonRu.testimonial.title)} className="ml-2 text-white cursor-pointer" />
             )}
 
             <div className="mt-2 pr-20">
@@ -208,13 +208,13 @@ const Home: React.FC = () => {
                 {changes['testimonial.description'] || textJsonRu.testimonial.description}
               </p>
               {isAuthenticated && (
-                <FaEdit onClick={() => openModal('testimonial.description', changes['testimonial.description'] || fileContent.testimonial?.description || textJsonRu.testimonial.description)} className="ml-2 text-white cursor-pointer" />
+                <FaEdit color={`green`} onClick={() => openModal('testimonial.description', changes['testimonial.description'] || fileContent.testimonial?.description || textJsonRu.testimonial.description)} className="ml-2 text-white cursor-pointer" />
               )}
 
               <p className={`font-syne text-md ${textColor}  font-bold mt-6`}>
                 {changes['testimonial.subtitle_testimonial'] || textJsonRu.testimonial.subtitle_testimonial}
                 {isAuthenticated && (
-                  <FaEdit onClick={() => openModal('testimonial.subtitle_testimonial', changes['testimonial.subtitle_testimonial'] || fileContent.testimonial?.subtitle_testimonial || textJsonRu.testimonial.subtitle_testimonial)} className="ml-2 text-white cursor-pointer" />
+                  <FaEdit color={`green`} onClick={() => openModal('testimonial.subtitle_testimonial', changes['testimonial.subtitle_testimonial'] || fileContent.testimonial?.subtitle_testimonial || textJsonRu.testimonial.subtitle_testimonial)} className="ml-2 text-white cursor-pointer" />
                 )}
               </p>
             </div>
@@ -232,20 +232,85 @@ const Home: React.FC = () => {
 
         {/* Кнопка для публикации изменений */}
         {isAuthenticated && (
-          <button onClick={publishChanges} className="z-50 fixed top-16 right-20 p-3 rounded-lg bg-green-500 text-white mt-4">
+          <button onClick={publishChanges} className="z-30 fixed top-16 right-20 p-3 rounded-lg bg-green-500 text-white mt-4">
             {isLoading ? "Обновление" : "Опубликовать изменения"}
           </button>
         )}
 
-<Modal isOpen={isModalOpen} onRequestClose={closeModal} className="">
+<Modal
+  isOpen={isModalOpen}
+  onRequestClose={closeModal}
+  style={{
+    overlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', // затемнение фона
+      zIndex: 9999, // высокий z-index
+    },
+    content: {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      transform: 'translate(-50%, -50%)',
+      backgroundColor: 'white',
+      padding: '20px',
+      borderRadius: '8px',
+      boxShadow: '0px 5px 15px rgba(0, 0, 0, 0.3)', // тень для окна
+      zIndex: 10000, // высокий z-index для контента
+      width: '400px', // ширина модального окна
+    },
+  }}
+>
+  <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem' }}>
+    Edit Text
+  </h2>
+  <textarea
+    value={currentText}
+    onChange={handleTextChange}
+    style={{
+      width: '100%',
+      height: '100px',
+      border: '1px solid #ccc',
+      padding: '10px',
+      borderRadius: '4px',
+    }}
+  />
+  <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'space-between' }}>
+    <button
+      onClick={closeModal}
+      style={{
+        backgroundColor: '#aaa',
+        color: 'white',
+        padding: '10px 20px',
+        borderRadius: '5px',
+        border: 'none',
+        cursor: 'pointer',
+      }}
+    >
+      Cancel
+    </button>
+    <button
+      onClick={saveChanges}
+      style={{
+        backgroundColor: '#007bff',
+        color: 'white',
+        padding: '10px 20px',
+        borderRadius: '5px',
+        border: 'none',
+        cursor: 'pointer',
+      }}
+    >
+      Save
+    </button>
+  </div>
+</Modal>
 
-          <h2 className="text-lg font-bold mb-4">Edit Text</h2>
-          <textarea value={currentText} onChange={handleTextChange} className="w-full h-32 border p-2" />
-          <div className="mt-4 flex justify-between">
-            <button onClick={closeModal} className="bg-gray-400 text-white py-2 px-4 rounded">Cancel</button>
-            <button onClick={saveChanges} className="bg-blue-500 text-white py-2 px-4 rounded">Save</button>
-          </div>
-        </Modal>
+
       </div>
     </>
   );

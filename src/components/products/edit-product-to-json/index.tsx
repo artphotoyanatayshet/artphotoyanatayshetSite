@@ -75,17 +75,19 @@ const EditProductToJson: React.FC<EditProductToJsonProps> = ({ productToEdit, on
     if (selectedFileForCard && newProduct) {
       setLoading(true);
       const newFileName = `product-${newProduct.id}.png`; // Изменено на .png
-      const newFilePath = `public/images-product/${newFileName}`; // Путь к файлу с новым именем
+      const newFilePathPublic = `public/images-product/${newFileName}`; // Путь к файлу с новым именем
+      const newFilePathJson = `images-product/${newFileName}`; // Путь к файлу с новым именем
+
 
       try {
-         handleFileUploadForCard(selectedFileForCard, newFilePath);
+         handleFileUploadForCard(selectedFileForCard, newFilePathPublic);
         setUploadMessageImage(`Файл ${newFileName} успешно загружен!`);
         setSelectedFileForCard(null);
 
         // Обновляем URL изображения в newProduct
         setNewProduct((prev) => ({
           ...prev,
-          img_url: newFilePath, // Обновляем URL
+          img_url: newFilePathJson, // Обновляем URL
         }) as Product);
       } catch (err) {
         setError('Ошибка при загрузке файла.');

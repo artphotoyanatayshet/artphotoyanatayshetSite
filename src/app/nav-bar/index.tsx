@@ -16,9 +16,12 @@ const NavBar: React.FC = () => {
 
   return (
     <nav className={`rounded-2xl border-solid border-2 border-indigo-600	 ${navBgColor} ${styles.nav}`}>
-      <div className={styles.logoContainer}>
+      <Link to={"/"}>   <div className={styles.logoContainer}>
+
         <Logo />
-      </div>
+
+      </div>  
+      </Link>
       <ul className={`${textColor} ${styles.navLinks}`}>
         <li>
           <Link to="/" className={styles.link}>Главная</Link>

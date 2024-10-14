@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import sendToTelegramCallToAction from '../utils/sendToTelegramCallToAction';
 import ModalCallToAction from '../modal-call-to-action';
 import InputMask from 'react-input-mask'; // Импортируем InputMask
+import { IoClose } from 'react-icons/io5'; // Импортируем иконку крестика
 
 interface UserData {
   name: string;
@@ -50,7 +51,13 @@ const CalToActionForm: React.FC<ContactFormProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md w-80">
+    <div className="bg-white p-4 rounded-lg shadow-md w-80 relative">
+      <button
+        onClick={onClose}
+        className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+      >
+        <IoClose size={24} /> {/* Иконка крестика */}
+      </button>
       <h2 className="text-lg font-bold mb-2">Связаться с нами</h2>
       <form onSubmit={handleSubmit}>
         <input
