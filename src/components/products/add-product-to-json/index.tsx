@@ -40,7 +40,7 @@ const AddProductToJson: React.FC = () => {
   const repo = GITREPO;
   const jsonFilePath = 'src/components/products/data-product-json/products.json';
   const imageUploadPathPublic = 'public/images-product';
-  const imagePathToJsonFile = 'images-product';
+  const imagePathToJsonFile = 'images-product/';
 
   // Загрузка продуктов из JSON
   const loadProducts = useCallback(async () => {
