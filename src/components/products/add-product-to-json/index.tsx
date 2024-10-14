@@ -103,14 +103,14 @@ const AddProductToJson: React.FC = () => {
     }
 
     const imageName = dataSaveProductGit.imgNameSaveGit;
-    const imagePathToJson = `${imageUploadPathPublic}/${imageName}`;
+    // const imagePathToJson = `${imageUploadPathPublic}/${imageName}`;
 
     // Проверка существования файла
-    const fileExists = await checkIfFileExists(imagePathToJson);
-    if (fileExists) {
-      setError('Изображение с таким именем уже существует.');
-      return;
-    }
+    // const fileExists = await checkIfFileExists(imagePathToJson);
+    // if (fileExists) {
+    //   setError('Изображение с таким именем уже существует.');
+    //   return;
+    // }
 
     setImageUploadLoading(true);
     try {
