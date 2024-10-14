@@ -70,14 +70,14 @@ const AddProductToJson: React.FC = () => {
   };
 
   // Проверка наличия файла перед загрузкой
-  const checkIfFileExists = async (filePath: string) => {
-    try {
-      const data = await getFileContent(owner, repo, filePath);
-      return !!data; // Файл существует
-    } catch (err) {
-      return false; // Файл не найден
-    }
-  };
+  // const checkIfFileExists = async (filePath: string) => {
+  //   try {
+  //     const data = await getFileContent(owner, repo, filePath);
+  //     return !!data; // Файл существует
+  //   } catch (err) {
+  //     return false; // Файл не найден
+  //   }
+  // };
 
   // Конвертация файла в Base64
   const convertFileToBase64 = (file: File): Promise<string> => {
