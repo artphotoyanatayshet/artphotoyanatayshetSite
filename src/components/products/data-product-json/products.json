@@ -58,5 +58,15 @@
     "discount": "10",
     "is_active": true,
     "is_delivery": false
+  },
+  {
+    "id": 9,
+    "img_url": "images-product/product-9.png",
+    "title": "Продукт5",
+    "description": "33",
+    "price": "330",
+    "discount": 0,
+    "is_active": false,
+    "is_delivery": false
   }
 ]
