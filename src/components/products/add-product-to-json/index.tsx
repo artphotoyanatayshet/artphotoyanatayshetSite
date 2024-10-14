@@ -40,7 +40,7 @@ const AddProductToJson: React.FC = () => {
   const repo = GITREPO;
   const jsonFilePath = 'src/components/products/data-product-json/products.json';
   const imageUploadPathPublic = 'public/images-product';
-  const imagePathToJsonFile = 'images-product/';
+  const imagePathToJsonFile = 'images-product';
 
   // Загрузка продуктов из JSON
   const loadProducts = useCallback(async () => {
@@ -95,33 +95,35 @@ const AddProductToJson: React.FC = () => {
       setError('Пожалуйста, выберите изображение.');
       return;
     }
-
+  
     const dataSaveProductGit = generateNewProductImagePath(products);
     if (!dataSaveProductGit?.imgNameSaveGit) {
       setError('Ошибка генерации имени изображения.');
       return;
     }
-
+  
     const imageName = dataSaveProductGit.imgNameSaveGit;
-    // const imagePathToJson = `${imageUploadPathPublic}/${imageName}`;
-
-    // Проверка существования файла
-    // const fileExists = await checkIfFileExists(imagePathToJson);
-    // if (fileExists) {
-    //   setError('Изображение с таким именем уже существует.');
-    //   return;
-    // }
-
+    const imagePath = `${imageUploadPathPublic}/${imageName}`;
+  
     setImageUploadLoading(true);
     try {
       const base64Image = await convertFileToBase64(selectedFile);
-
-      const payload = {
-        message: `Загружено изображение: ${imageName}`,
+  
+      const payload:any = {
+        message: `Обновлено изображение: ${imageName}`,
         content: base64Image,
       };
-
-      await updateFileContent(owner, repo, `${imageUploadPathPublic}/${imageName}`, payload);
+  
+      // Пытаемся обновить файл, даже если он уже существует
+      try {
+        const data = await getFileContent(owner, repo, imagePath);
+        payload.sha = data.sha; // Если файл существует, добавляем его SHA для обновления
+      } catch (err) {
+        // Если файл не найден, ничего не делаем — это нормально, потому что файл будет создан
+        console.warn(`Файл ${imagePath} не найден. Будет создан новый файл.`);
+      }
+  
+      await updateFileContent(owner, repo, imagePath, payload);
       setUploadMessage('Изображение успешно загружено!');
       setNewProduct((prev) => ({ ...prev, img_url: `${imagePathToJsonFile}/${imageName}` }));
       setImageUrl(imageUploadPathPublic);
@@ -132,6 +134,7 @@ const AddProductToJson: React.FC = () => {
       setImageUploadLoading(false);
     }
   }, [selectedFile, owner, repo, products]);
+  
 
   // Добавление нового продукта
  // Добавление нового продукта
